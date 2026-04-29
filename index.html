@@ -1,95 +1,286 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>CDARCH 充电架构师</title>
-  <meta name="description" content="充电站与配电系统快速测算工具，帮助工程师快速完成方案计算">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #0f172a;
-      color: #e2e8f0;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 40px 20px;
-    }
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-    p {
-      color: #94a3b8;
-    }
-    .card {
-      background: #1e293b;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
-    a {
-      display: inline-block;
-      margin-top: 10px;
-      color: #38bdf8;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .highlight {
-      border: 2px solid #38bdf8;
-    }
-    .footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #64748b;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>重卡充电规划与工程工具参考</title>
+  <meta
+    name="description"
+    content="面向重卡充电、充电站规划、电气设计判断与实用工程工具的专业参考网站。"
+  >
+  <link rel="stylesheet" href="assets/css/site.css">
 </head>
-
 <body>
-  <div class="container">
-
-    <!-- 顶部定位 -->
-    <h1>CDARCH 充电架构师</h1>
-    <p>专注充电站与配电系统的快速测算工具</p>
-
-    <!-- 核心工具（主推） -->
-    <div class="card highlight">
-      <h2>🚛 重卡充电功率计算器</h2>
-      <p>快速计算充电站容量配置，避免过载与资源浪费</p>
-      <a href="/heavy_truck_charging.html">👉 立即使用</a>
+  <header class="site-header">
+    <div class="container site-header__bar">
+      <a class="site-brand" href="index.html">CDARCH</a>
+      <div class="site-header__meta">
+        <nav class="site-nav" aria-label="主导航">
+          <a href="#value">网站价值</a>
+          <a href="heavy_truck_charging.html">核心工具</a>
+          <a href="#insights">内容方向</a>
+          <a href="#contact">联系入口</a>
+        </nav>
+        <div class="lang-switch" aria-label="语言切换">
+          <a class="is-active" href="index.html" lang="zh-CN">中文</a>
+          <span>|</span>
+          <a href="#" lang="en">EN</a>
+        </div>
+      </div>
     </div>
+  </header>
 
-    <!-- 工具列表 -->
-    <div class="card">
-      <h2>⚡ 更多工具（持续更新）</h2>
+  <main>
+    <section class="hero section">
+      <div class="container hero__layout">
+        <div class="hero__content">
+          <p class="eyebrow">重卡充电规划</p>
+          <h1 class="section-title hero__title">
+            面向重卡充电场景的规划参考、工程工具与实用内容。
+          </h1>
+          <p class="section-copy hero__copy">
+            这里聚焦重卡充电、充电站规划与电气设计判断，服务于投资评估、车队运营、
+            工商业场景与项目沟通。网站将逐步提供实用测算工具、场景化决策参考与可持续扩展的专业内容。
+          </p>
+          <div class="hero__actions">
+            <a class="button" href="heavy_truck_charging.html">进入重卡充电工具</a>
+            <a class="button button--secondary" href="#insights">查看后续内容方向</a>
+          </div>
+        </div>
+        <aside class="hero-panel card" aria-label="首页摘要">
+          <div class="hero-panel__item">
+            <span class="hero-panel__label">当前重点</span>
+            <strong>重卡充电规划与工程判断清晰化</strong>
+          </div>
+          <div class="hero-panel__item">
+            <span class="hero-panel__label">核心入口</span>
+            <strong>重卡充电测算工具与场景化参考</strong>
+          </div>
+          <div class="hero-panel__item">
+            <span class="hero-panel__label">后续方向</span>
+            <strong>沉淀可复用工具、专题页面与内容流量入口</strong>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-      <p>👉 变压器容量测算（开发中）</p>
-      <p>👉 电缆选型工具（开发中）</p>
-      <p>👉 充电站成本估算（开发中）</p>
+    <section class="section" id="value">
+      <div class="container">
+        <p class="eyebrow">网站价值</p>
+        <h2 class="section-title section-title--compact">这个网站希望优先解决哪些问题</h2>
+        <p class="section-copy">
+          这里不是泛化宣传页，而是希望把充电需求、容量判断、设备配置和项目沟通
+          这些常见问题表达得更清楚、更可讨论，也更便于转化为实际方案思考。
+        </p>
+        <div class="card-grid card-grid--four">
+          <article class="card info-card">
+            <h3>前期规划判断</h3>
+            <p>
+              在详细设计开始前，先对功率需求、充电时窗和基础设施规模形成清晰的初步判断。
+            </p>
+          </article>
+          <article class="card info-card">
+            <h3>工程导向工具</h3>
+            <p>
+              用轻量、可理解的工具支撑容量测算、设备选型和系统配置逻辑讨论。
+            </p>
+          </article>
+          <article class="card info-card">
+            <h3>项目沟通支撑</h3>
+            <p>
+              把技术假设整理成投资方、运营方、合作方都能跟上的表达方式。
+            </p>
+          </article>
+          <article class="card info-card">
+            <h3>内容沉淀与引流</h3>
+            <p>
+              围绕真实充电问题和高频项目议题，逐步沉淀文章、专题页和搜索入口。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tinted">
+      <div class="container">
+        <div class="feature card">
+          <div class="feature__content">
+            <p class="eyebrow">核心工具</p>
+            <h2 class="section-title section-title--compact">重卡充电规划测算工具</h2>
+            <p class="section-copy">
+              当前主工具用于快速梳理重卡充电场景下的功率需求与配置方向，
+              适合在前期规划、容量评估和多种方案比较时作为第一步参考。
+            </p>
+            <ul class="feature-list">
+              <li>适合充电站投资评估、车队运营分析和电气规划沟通场景。</li>
+              <li>帮助把模糊需求转化为更具体的容量、设备与配置讨论。</li>
+              <li>在正式项目设计前，提供一个可解释、可复核的起点。</li>
+            </ul>
+            <a class="button" href="heavy_truck_charging.html">打开主工具页面</a>
+          </div>
+          <div class="feature__panel">
+            <div class="feature-stat card">
+              <span class="feature-stat__label">适用任务</span>
+              <strong>基于场景的充电功率初步测算</strong>
+            </div>
+            <div class="feature-stat card">
+              <span class="feature-stat__label">实际价值</span>
+              <strong>更快对齐枪数、功率等级与规划方向</strong>
+            </div>
+            <div class="feature-stat card">
+              <span class="feature-stat__label">工具定位</span>
+              <strong>强调工程参考，不做黑箱式营销计算器</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container trust">
+        <div>
+          <p class="eyebrow">专业可信度</p>
+          <h2 class="section-title section-title--compact">以项目落地视角理解充电规划与设计判断</h2>
+        </div>
+        <div class="trust__grid">
+          <div class="trust__copy">
+            <p>
+              这个网站希望体现的是一种务实的电气设计思路：先定义场景，再明确假设，
+              最后把判断逻辑讲清楚。重点是提高工程可理解性，而不是堆砌夸张表述。
+            </p>
+            <p>
+              无论是工具还是内容，都应帮助用户更好地讨论功率需求、充电节奏、设备结构
+              和系统规模等关键问题，这也是首页希望建立的专业信任基础。
+            </p>
+          </div>
+          <div class="trust-points card">
+            <h3>工作原则</h3>
+            <ul class="feature-list">
+              <li>优先结合真实规划场景，而不是停留在抽象理论。</li>
+              <li>优先公开假设条件，而不是隐藏关键逻辑。</li>
+              <li>优先工程表达清晰度，而不是营销式话术。</li>
+              <li>以可持续迭代的工具和内容支持项目成长。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tinted">
+      <div class="container">
+        <p class="eyebrow">场景与问题</p>
+        <h2 class="section-title section-title--compact">重卡充电项目中常见的决策议题</h2>
+        <p class="section-copy">
+          这些议题后续也会延展为文章页面、专题内容和搜索流量入口，逐步形成可复用的内容体系。
+        </p>
+        <div class="card-grid card-grid--three">
+          <article class="card topic-card">
+            <h3>特定车队节奏下，究竟需要多大充电功率？</h3>
+            <p>结合车辆数量、电池容量和可用充电时间，先形成一个可信的初步判断。</p>
+          </article>
+          <article class="card topic-card">
+            <h3>变压器容量与充电设备功率应该如何匹配？</h3>
+            <p>为后续设备选型、冗余策略和基础设施权衡准备更清晰的讨论框架。</p>
+          </article>
+          <article class="card topic-card">
+            <h3>什么情况下，高功率配置在运营上是合理的？</h3>
+            <p>从利用率、周转要求和场地限制出发，理解充电策略为何会不同。</p>
+          </article>
+          <article class="card topic-card">
+            <h3>充电站前期规划最容易出现哪些误判？</h3>
+            <p>围绕过度配置、配置不足、排队假设和供电判断偏差等问题展开后续内容。</p>
+          </article>
+          <article class="card topic-card">
+            <h3>不同场地类型下，充电场景应如何区分？</h3>
+            <p>为车队基地、物流园区、工业园和专用运营场景建立对比框架。</p>
+          </article>
+          <article class="card topic-card">
+            <h3>项目推进前，决策方最该先确认哪些信息？</h3>
+            <p>沉淀更有结构的问题清单，提升与规划方、设备方和内部团队的沟通效率。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="insights">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">内容预览</p>
+            <h2 class="section-title section-title--compact">后续文章与专题内容方向</h2>
+          </div>
+          <a class="text-link" href="#contact">后续将持续更新</a>
+        </div>
+        <div class="card-grid card-grid--three">
+          <article class="card article-card">
+            <p class="article-card__meta">规划中内容</p>
+            <h3>如何估算重卡充电容量，同时避免明显过配</h3>
+            <p>
+              计划从充电时间、车队规模和基础设施冗余三个角度，讨论更稳妥的判断方法。
+            </p>
+          </article>
+          <article class="card article-card">
+            <p class="article-card__meta">规划中内容</p>
+            <h3>充电站前期规划中，哪些问题最容易被低估</h3>
+            <p>
+              准备围绕假设缺口、设备错配和运营盲点，形成一套可复用的文章结构。
+            </p>
+          </article>
+          <article class="card article-card">
+            <p class="article-card__meta">规划中内容</p>
+            <h3>变压器容量与充电设备选型，为什么必须放在一起讨论</h3>
+            <p>
+              后续将结合供电路径和功率策略，对项目团队常见分歧做更完整的技术说明。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-panel card">
+          <div>
+            <p class="eyebrow">下一步</p>
+            <h2 class="section-title section-title--compact">先用工具建立判断，再逐步展开更具体的项目问题。</h2>
+            <p class="section-copy">
+              首页的职责是先给出一个实用入口，同时为后续专题内容、更深入的参考页面和更多工具预留空间。
+            </p>
+          </div>
+          <div class="cta-panel__actions">
+            <a class="button" href="heavy_truck_charging.html">使用重卡充电工具</a>
+            <a class="button button--secondary" href="#contact">关注后续更新</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container site-footer__grid">
+      <div>
+        <a class="site-brand site-brand--footer" href="index.html">CDARCH</a>
+        <p class="site-footer__copy">
+          围绕重卡充电的专业参考、实用规划支持与后续工程内容沉淀。
+        </p>
+      </div>
+      <div>
+        <h2 class="site-footer__title">页面导航</h2>
+        <ul class="footer-list">
+          <li><a href="index.html">首页</a></li>
+          <li><a href="heavy_truck_charging.html">重卡充电工具</a></li>
+          <li><a href="#insights">内容预览</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__title">联系与公众号</h2>
+        <ul class="footer-list">
+          <li>公众号：后续补充</li>
+          <li>邮箱：后续补充</li>
+          <li>咨询入口：后续完善</li>
+        </ul>
+      </div>
     </div>
-
-    <!-- 信任区 -->
-    <div class="card">
-      <h2>为什么使用 CDARCH</h2>
-      <p>✔ 基于真实工程经验构建</p>
-      <p>✔ 专为重卡充电与配电设计优化</p>
-      <p>✔ 提供快速方案测算参考</p>
-    </div>
-
-    <!-- 留资 -->
-    <div class="card">
-      <h2>获取完整方案支持</h2>
-      <p>如需完整设计方案或项目支持，可联系：</p>
-      <p>📩 微信 / 邮箱：你的联系方式</p>
-    </div>
-
-    <!-- 底部 -->
-    <div class="footer">
-      © 2026 CDARCH 充电架构师
-    </div>
-
-  </div>
+  </footer>
 </body>
 </html>
