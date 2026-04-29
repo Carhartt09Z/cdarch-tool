@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>重卡充电站方案计算器｜充电架构师</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;background:#f8fafc;color:#0f172a}.page{max-width:1180px;margin:0 auto;padding:24px}.badge{display:inline-flex;border-radius:999px;background:#0f172a;color:white;padding:4px 12px;font-size:14px;font-weight:600;margin-bottom:12px}h1{font-size:30px;margin:0 0 8px}.desc{color:#64748b;margin:0 0 24px}.layout{display:grid;grid-template-columns:1fr 2fr;gap:24px}.right{display:grid;gap:24px}.card{background:white;border:1px solid #e2e8f0;border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.04)}.black{border-color:#0f172a}.inner{padding:20px}.title{font-size:20px;font-weight:700;margin:0 0 16px}.form{display:grid;gap:18px}label{display:block;font-size:14px;font-weight:600;color:#334155;margin-bottom:8px}.row{display:flex;gap:8px;align-items:center}input,select{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:10px 12px;font-size:14px;background:white;outline:none}input:focus,select:focus{border-color:#64748b;box-shadow:0 0 0 3px rgba(100,116,139,.12)}.unit{width:52px;color:#64748b;font-size:14px}.hint,.note{font-size:12px;color:#64748b;margin:8px 0 0}.btn{width:100%;border:0;border-radius:12px;background:#0f172a;color:white;padding:10px 12px;font-weight:700;cursor:pointer}.btn:hover{background:#334155}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.metric{padding:16px}.mlabel{display:flex;gap:8px;align-items:center;color:#64748b;font-size:14px;margin-bottom:8px}.mvalue{font-size:28px;font-weight:800}.icon{display:inline-flex;width:24px;height:24px;border-radius:999px;background:#f1f5f9;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#334155;flex-shrink:0}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 18px;font-size:14px}.grid2 b{font-weight:800}.wrap{overflow-x:auto}table{width:100%;min-width:640px;border-collapse:collapse;font-size:14px}th{text-align:left;color:#64748b;background:#f1f5f9}th,td{padding:12px;border-bottom:1px solid #e2e8f0}.summary{border:1px solid #e2e8f0;border-radius:14px;background:#f8fafc;padding:16px;font-size:16px;line-height:1.8}.brand{border-top:1px solid #e2e8f0;margin-top:12px;padding-top:12px;color:#475569;font-size:14px}.logic{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;color:#64748b;font-size:14px}.warn{border-color:#facc15}.warn ul{margin:0;padding-left:20px;font-size:14px}.pass{color:#059669}.fail{color:#dc2626}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:1fr}.grid2,.logic{grid-template-columns:1fr}.page{padding:16px}h1{font-size:24px}}
+@media print{body{background:white}.page{max-width:none;padding:0}.print-hidden{display:none!important}.card{box-shadow:none;break-inside:avoid}.layout{grid-template-columns:1fr 2fr;gap:16px}.right{gap:16px}.metrics{grid-template-columns:repeat(3,1fr)}.badge{background:#111827!important;color:white!important}}
+</style>
+</head>
+<body>
+<main class="page">
+  <header>
+    <div class="badge">充电架构师 · Web工具</div>
+    <h1>重卡充电站方案计算器</h1>
+    <p class="desc">先锁定理论总功率，再推荐单枪功率和系统枪数；重卡默认按双枪同充考虑。</p>
+  </header>
+
+  <section class="layout">
+    <aside class="card"><div class="inner form">
+      <h2 class="title">输入参数</h2>
+      <div><label>单车电池容量</label><div class="row"><input id="batteryKwh" type="number" min="1" value="350"><span class="unit">kWh</span></div></div>
+      <div><label>车辆数量</label><div class="row"><input id="vehicleCount" type="number" min="1" value="20"><span class="unit">台</span></div></div>
+      <div><label>有效充电时间</label><div class="row"><input id="chargeHours" type="number" min="0.1" step="0.1" value="6"><span class="unit">h</span></div><p class="hint">指车辆真正可用于稳定充电的时间，不等于停车总时长。建议扣除排队、插拔枪、调度和缓冲时间。</p></div>
+      <div><label>系统效率 η</label><select id="efficiency"><option value="0.85">0.85</option><option value="0.9" selected>0.9</option><option value="0.92">0.92</option></select></div>
+      <div><label>单模块功率</label><select id="modulePower"><option value="30">30kW</option><option value="40" selected>40kW</option><option value="50">50kW</option><option value="60">60kW</option></select></div>
+      <button class="btn print-hidden" id="exportPdf" type="button">导出PDF</button>
+    </div></aside>
+
+    <section class="right">
+      <div class="metrics">
+        <div class="card metric"><div class="mlabel"><span class="icon">Σ</span>理论总功率需求</div><div class="mvalue" id="totalPower">0 kW</div><div class="hint">推荐方案以此为目标，模块取整后略高属正常</div></div>
+        <div class="card metric"><div class="mlabel"><span class="icon">单车</span>单车SOC 20%-80%</div><div class="mvalue" id="singleSoc">0 kWh</div><div class="hint">350kWh电池对应210kWh</div></div>
+        <div class="card metric"><div class="mlabel"><span class="icon">车队</span>车队SOC 20%-80%</div><div class="mvalue" id="fleetSoc">0 kWh</div><div class="hint">所有车辆合计补能量</div></div>
+      </div>
+
+      <div class="card black"><div class="inner">
+        <h2 class="title">推荐方案</h2>
+        <p class="hint" style="margin-top:-10px;margin-bottom:16px">先推荐单枪功率，再反推建议枪数（重卡场景默认按双枪同时充电进行配置）</p>
+        <div class="grid2">
+          <div>系统类型：<b id="systemType">-</b></div><div>推荐枪型：<b id="gunType">-</b></div>
+          <div>理论总功率需求：<b id="planTotalPower">0 kW</b></div><div>模块取整后装机：<b id="installedPower">0 kW</b></div>
+          <div>装机冗余：<b id="powerDeviation">0 kW</b></div><div>装机冗余率：<b id="powerDeviationRate">0%</b></div>
+          <div>建议枪数：<b id="actualTotalGunCount">0 把</b></div><div>终端数量：<b id="pileCount">0 台</b></div>
+          <div>单桩功率：<b id="actualPilePower">0 kW</b></div><div>建议单枪功率：<b id="recommendedGunPower">0 kW</b></div>
+          <div>单枪模块数：<b id="recommendedModulesPerGun">0 个</b></div><div>重卡同充单车功率：<b id="recommendedVehiclePower">0 kW</b></div>
+          <div>建议变压器容量：<b id="transformerKva">0 kVA</b></div>
+        </div>
+      </div></div>
+
+      <div class="card"><div class="inner">
+        <h2 class="title">单枪功率与枪数参考</h2>
+        <p class="hint" style="margin-top:-10px;margin-bottom:16px">同一总功率下，单枪功率越高，所需枪数越少；重卡双枪同充时，也要关注单车实际获得的功率。</p>
+        <div class="wrap"><table><thead><tr><th>单枪功率</th><th>双枪单车功率</th><th>建议枪数</th><th>终端数量</th><th>装机功率</th><th>装机冗余率</th></tr></thead><tbody id="alternativeRows"></tbody></table></div>
+      </div></div>
+
+      <div class="card"><div class="inner">
+        <h2 class="title">方案展示</h2>
+        <div class="summary"><p id="recommendedSummary" style="margin:0"></p><div class="brand">本方案由【充电架构师】生成，微信公众号同名<br>专注重卡充电系统设计 ｜ 技术交流微信号：CDArch</div></div>
+        <p class="note">说明：理论总功率是需求目标；装机功率会因模块功率、终端数量和单桩枪数向上取整。正式方案仍需结合供电条件、设备结构、线缆距离、散热与认证要求复核。</p>
+      </div></div>
+
+      <div id="warningCard" class="card warn" style="display:none"><div class="inner"><div style="display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:12px"><span class="icon">!</span>风险提示</div><ul id="warningList"></ul></div></div>
+
+      <div class="card"><div class="inner"><div style="display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:12px"><span class="icon">i</span>计算逻辑说明</div><div class="logic"><p>理论总功率 = 单车电池容量 × 车辆数量 ÷ 有效充电时间 ÷ 系统效率。</p><p>推荐方案先估算单车目标功率，再按重卡双枪同充折算单枪功率，并向上取整到模块倍数。</p><p>单枪功率越高，系统所需枪数越少；单枪功率越低，枪数越多，排队能力更强但终端数量可能增加。</p><p>SOC 20%-80%分为单车补能量和车队补能量，4200kWh指20台350kWh车辆合计补能量，不是单车补能量。</p></div></div></div>
+
+      <div class="card print-hidden" id="testCard"><div class="inner"><div style="display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:12px"><span class="icon" id="testIcon">✓</span>内置计算测试</div><div id="testList" class="logic"></div></div></div>
+    </section>
+  </section>
+</main>
+
+<script>
+const scenarioMinVehiclePower=240,fixedGunsPerPile=2,fixedVehicleConcurrentGuns=2;
+function normalizeNumberInput(v){if(v==="")return"";if(v===".")return"0.";if(v.startsWith("0."))return v;return v.replace(/^0+(?=[0-9])/,"")}
+function toSafeNumber(v,f,m){const n=Number(v);return Number.isFinite(n)?Math.max(n,m):f}
+function formatNumber(v,d=0){return Number.isFinite(v)?v.toLocaleString("zh-CN",{maximumFractionDigits:d,minimumFractionDigits:0}):"0"}
+function ceilToEven(v){const r=Math.ceil(v);return r%2===0?r:r+1}
+function buildRecommendation({totalPower,vehicleCount,modulePower}){const vc=Math.max(Number(vehicleCount)||1,1),mp=Math.max(Number(modulePower)||40,1),targetVehiclePower=Math.max(totalPower/vc,scenarioMinVehiclePower),targetGunPower=targetVehiclePower/fixedVehicleConcurrentGuns,modules=Math.max(Math.ceil(targetGunPower/mp),1),gunPower=modules*mp,vehiclePower=gunPower*fixedVehicleConcurrentGuns,rawGunCount=Math.ceil(totalPower/gunPower),desiredGunCount=ceilToEven(rawGunCount),pileCount=Math.max(Math.ceil(desiredGunCount/fixedGunsPerPile),1),actualTotalGunCount=pileCount*fixedGunsPerPile,modulesPerPile=modules*fixedGunsPerPile,actualPilePower=modulesPerPile*mp,installedPower=pileCount*actualPilePower,transformerKva=Math.ceil(installedPower/.8/100)*100,gunType=gunPower>300?"液冷枪":"风冷枪",systemType=installedPower>1000?"群充系统":"独立直流桩",powerDeviation=installedPower-totalPower,powerDeviationRate=totalPower>0?powerDeviation/totalPower:0;return{targetVehiclePower,targetGunPower,recommendedModulesPerGun:modules,recommendedGunPower:gunPower,recommendedVehiclePower:vehiclePower,desiredGunCount,pileCount,actualTotalGunCount,modulesPerPile,actualPilePower,installedPower,transformerKva,gunType,systemType,powerDeviation,powerDeviationRate}}
+function calculateChargingPlan(input){const battery=toSafeNumber(input.batteryKwh,0,0),vehicles=toSafeNumber(input.vehicleCount,1,1),hours=toSafeNumber(input.chargeHours,.1,.1),eff=toSafeNumber(input.efficiency,.9,.01),modulePower=toSafeNumber(input.modulePower,40,1),totalEnergy=battery*vehicles,singleSoc=battery*.6,fleetSoc=totalEnergy*.6,totalPower=totalEnergy/(hours*eff),plan=buildRecommendation({totalPower,vehicleCount:vehicles,modulePower});const alternatives=[2,3,4,5,6,8].map(modules=>{const gunPower=modules*modulePower,raw=Math.ceil(totalPower/gunPower),gunCount=ceilToEven(raw),pileCount=Math.max(Math.ceil(gunCount/fixedGunsPerPile),1),actualTotalGunCount=pileCount*fixedGunsPerPile,installedPower=actualTotalGunCount*gunPower;return{modulesPerGun:modules,gunPower,pairedVehiclePower:gunPower*fixedVehicleConcurrentGuns,gunCount:actualTotalGunCount,pileCount,installedPower,deviationRate:totalPower>0?(installedPower-totalPower)/totalPower:0}}).filter((p,i,a)=>a.findIndex(x=>x.gunPower===p.gunPower)===i);const warnings=[];if(plan.recommendedGunPower>300)warnings.push("存在单枪功率超过300kW的方案，建议优先考虑液冷枪及温度监测。");if(plan.powerDeviationRate>.15)warnings.push("推荐方案因模块颗粒度产生较大装机冗余，建议复核推荐单枪功率或模块功率。");const summary=`推荐方案：理论总功率需求约${Math.round(totalPower)}kW，建议单枪功率${plan.recommendedGunPower}kW，按重卡双枪同充折算单车约${plan.recommendedVehiclePower}kW；建议配置${plan.actualTotalGunCount}把枪、${plan.pileCount}台双枪终端，模块取整后装机约${Math.round(plan.installedPower)}kW。`;return{totalEnergy,singleVehicleSoc20To80Energy:singleSoc,fleetSoc20To80Energy:fleetSoc,totalPower,recommendedPlan:plan,alternativeGunPowerPlans:alternatives,warnings,recommendedSummary:summary}}
+function runCalculationTests(){const base=calculateChargingPlan({batteryKwh:350,vehicleCount:20,chargeHours:6,efficiency:.9,modulePower:40}),sixteen=calculateChargingPlan({batteryKwh:400,vehicleCount:20,chargeHours:5,efficiency:1,modulePower:40}),high=calculateChargingPlan({batteryKwh:500,vehicleCount:10,chargeHours:2,efficiency:.9,modulePower:60});return[{name:"理论总功率只由车辆、电量、时间、效率决定",pass:Math.round(base.totalPower)===1296},{name:"推荐方案单枪功率为模块倍数",pass:base.recommendedPlan.recommendedGunPower%40===0},{name:"1600kW系统可按80kW单枪推荐20枪",pass:Math.round(sixteen.totalPower)===1600&&sixteen.recommendedPlan.recommendedGunPower===80&&sixteen.recommendedPlan.actualTotalGunCount===20},{name:"高功率场景推荐液冷",pass:high.recommendedPlan.gunType==="液冷枪"&&high.recommendedPlan.recommendedGunPower>300},{name:"单车SOC 20%-80%为单车电池容量的60%",pass:Math.round(base.singleVehicleSoc20To80Energy)===210},{name:"车队SOC 20%-80%为车队总电量的60%",pass:Math.round(base.fleetSoc20To80Energy)===4200}]}
+function setText(id,v){document.getElementById(id).textContent=v}
+function readInput(){return{batteryKwh:document.getElementById("batteryKwh").value,vehicleCount:document.getElementById("vehicleCount").value,chargeHours:document.getElementById("chargeHours").value,efficiency:document.getElementById("efficiency").value,modulePower:document.getElementById("modulePower").value}}
+function render(){const result=calculateChargingPlan(readInput()),p=result.recommendedPlan;setText("totalPower",`${formatNumber(result.totalPower)} kW`);setText("singleSoc",`${formatNumber(result.singleVehicleSoc20To80Energy)} kWh`);setText("fleetSoc",`${formatNumber(result.fleetSoc20To80Energy)} kWh`);setText("systemType",p.systemType);setText("gunType",p.gunType);setText("planTotalPower",`${formatNumber(result.totalPower)} kW`);setText("installedPower",`${formatNumber(p.installedPower)} kW`);setText("powerDeviation",`${formatNumber(p.powerDeviation)} kW`);setText("powerDeviationRate",`${formatNumber(p.powerDeviationRate*100,1)}%`);setText("actualTotalGunCount",`${p.actualTotalGunCount} 把`);setText("pileCount",`${p.pileCount} 台`);setText("actualPilePower",`${formatNumber(p.actualPilePower)} kW`);setText("recommendedGunPower",`${formatNumber(p.recommendedGunPower)} kW`);setText("recommendedModulesPerGun",`${p.recommendedModulesPerGun} 个`);setText("recommendedVehiclePower",`${formatNumber(p.recommendedVehiclePower)} kW`);setText("transformerKva",`${formatNumber(p.transformerKva)} kVA`);setText("recommendedSummary",result.recommendedSummary);document.getElementById("alternativeRows").innerHTML=result.alternativeGunPowerPlans.map(x=>`<tr><td>${formatNumber(x.gunPower)} kW</td><td>${formatNumber(x.pairedVehiclePower)} kW</td><td>${x.gunCount} 把</td><td>${x.pileCount} 台</td><td>${formatNumber(x.installedPower)} kW</td><td>${formatNumber(x.deviationRate*100,1)}%</td></tr>`).join("");const wc=document.getElementById("warningCard"),wl=document.getElementById("warningList");if(result.warnings.length){wc.style.display="";wl.innerHTML=result.warnings.map(x=>`<li>${x}</li>`).join("")}else{wc.style.display="none";wl.innerHTML=""}}
+function renderTests(){const tests=runCalculationTests(),failed=tests.filter(x=>!x.pass);setText("testIcon",failed.length?"×":"✓");document.getElementById("testList").innerHTML=tests.map(x=>`<div class="${x.pass?"pass":"fail"}">${x.pass?"通过":"失败"}：${x.name}</div>`).join("")}
+["batteryKwh","vehicleCount","chargeHours"].forEach(id=>{document.getElementById(id).addEventListener("input",e=>{e.target.value=normalizeNumberInput(e.target.value);render()})});["efficiency","modulePower"].forEach(id=>document.getElementById(id).addEventListener("change",render));document.getElementById("exportPdf").addEventListener("click",()=>window.print());render();renderTests();
+</script>
+</body>
+</html>
